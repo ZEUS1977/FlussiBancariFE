@@ -26,5 +26,5 @@
 		<property name="maxUploadSize" value="10000000" />
 
 	</bean>
-	<context:component-scan base-package="online.flussibancari.controller" />
+	<context:component-scan base-package="online.flussibancari.mav.controller" />
 </beans>

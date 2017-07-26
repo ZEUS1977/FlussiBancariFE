@@ -6,6 +6,6 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     
          <context:component-scan
-            base-package="online.flussibancari.controller"/> 
+            base-package="online.flussibancari.mav.controller"/> 
 
 </beans>

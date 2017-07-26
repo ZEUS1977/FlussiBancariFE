@@ -1,4 +1,4 @@
-package online.flussibancari.model;
+package online.flussibancari.mav.model;
 
 public class OutputFile {
 	

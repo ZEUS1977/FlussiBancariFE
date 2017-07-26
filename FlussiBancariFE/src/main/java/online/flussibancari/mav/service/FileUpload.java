@@ -1,4 +1,4 @@
-package online.flussibancari.service;
+package online.flussibancari.mav.service;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -7,14 +7,20 @@ import java.util.Calendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import online.flussibancari.constants.Constants;
+import online.flussibancari.mav.constants.Constants;
 
+//@Service("uploadService")
 public class FileUpload {
 	
 	private static final Logger logger = LoggerFactory
 			.getLogger(FileUpload.class);
+	
+	public FileUpload(){
+		super();
+	}
 	/**
 	 * Take a multipart file and save it on a temp dir on server
 	 * @param file

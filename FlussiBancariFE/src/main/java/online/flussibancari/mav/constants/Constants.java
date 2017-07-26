@@ -1,4 +1,4 @@
-package online.flussibancari.constants;
+package online.flussibancari.mav.constants;
 
 public class Constants {
 	public static final String CATALINA_HOME = "catalina.home";

@@ -1,21 +1,27 @@
-package online.flussibancari.service;
+package online.flussibancari.mav.service;
 
 import java.io.File;
 import java.util.Calendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import online.flussibancari.cbi.mav.service.CBIMAVFlatService;
 import online.flussibancari.cbi.mav.service.CBIMAVFlatServiceImpl;
-import online.flussibancari.constants.Constants;
-import online.flussibancari.model.OutputFile;
+import online.flussibancari.mav.constants.Constants;
+import online.flussibancari.mav.model.OutputFile;
 
+//@Service("creatorService")
 public class CBIMAVCreator {
 	
 	private static final Logger logger = LoggerFactory
 			.getLogger(CBIMAVCreator.class);
 
+	public CBIMAVCreator(){
+		super();
+	}
+	
 	public OutputFile generate(String inputPath){
 		CBIMAVFlatService service = new CBIMAVFlatServiceImpl();
 		String rootPath = System.getProperty(Constants.CATALINA_HOME);
