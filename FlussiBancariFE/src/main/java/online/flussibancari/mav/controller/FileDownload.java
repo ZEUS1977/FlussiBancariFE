@@ -29,8 +29,13 @@ public class FileDownload{
 	public void getLogFile(@PathVariable("fileName") String fileName, HttpServletResponse response) throws Exception {
 	    try {
 	    	String rootPath = System.getProperty(Constants.CATALINA_HOME);
-	        String filePathToBeServed = rootPath + File.separator + Constants.TMP_DIR + File.separator + fileName + ".txt";
-	        File fileToDownload = new File(filePathToBeServed);
+	        String filePathToBeServed = rootPath + File.separator + Constants.TEMP_DIR + File.separator + fileName + ".txt";
+	    	if(rootPath ==null) {
+		        	rootPath = System.getProperty(Constants.WILDFLY_HOME);
+		        	filePathToBeServed = rootPath + File.separator + Constants.STANDALONE + File.separator
+		        						+ Constants.TMP_DIR + File.separator + fileName + ".txt";
+	    	}
+	    	File fileToDownload = new File(filePathToBeServed);
 	        InputStream inputStream = new FileInputStream(fileToDownload);
 	        response.setContentType("application/force-download");
 	        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".txt"); 

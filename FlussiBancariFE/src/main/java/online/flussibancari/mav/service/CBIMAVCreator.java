@@ -26,7 +26,12 @@ public class CBIMAVCreator {
 		CBIMAVFlatService service = new CBIMAVFlatServiceImpl();
 		String rootPath = System.getProperty(Constants.CATALINA_HOME);
 		String outputName =  Constants.OUT_MAV_PREFIX +  Calendar.getInstance().getTimeInMillis() + ".txt";
-		String outputPath = rootPath + File.separator + Constants.TMP_DIR + File.separator + outputName;
+		String outputPath = rootPath + File.separator + Constants.TEMP_DIR + File.separator + outputName;
+		if(rootPath == null) {
+			rootPath = System.getProperty(Constants.WILDFLY_HOME);
+			outputPath = rootPath + File.separator + Constants.STANDALONE + 
+					 	File.separator + Constants.TMP_DIR + File.separator + outputName;
+		}
 			
 		OutputFile out = new OutputFile();
 		out.setServerPath(outputPath);
