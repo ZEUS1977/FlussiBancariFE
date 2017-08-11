@@ -1,4 +1,4 @@
-package online.flussibancari.mav.controller;
+package online.flussibancari.controller.mav;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,16 +29,16 @@ public class FileDownload{
 	public void getLogFile(@PathVariable("fileName") String fileName, HttpServletResponse response) throws Exception {
 	    try {
 	    	String rootPath = System.getProperty(Constants.CATALINA_HOME);
-	        String filePathToBeServed = rootPath + File.separator + Constants.TEMP_DIR + File.separator + fileName + ".txt";
+	        String filePathToBeServed = rootPath + File.separator + Constants.TEMP_DIR + File.separator + fileName;
 	    	if(rootPath ==null) {
 		        	rootPath = System.getProperty(Constants.WILDFLY_HOME);
 		        	filePathToBeServed = rootPath + File.separator + Constants.STANDALONE + File.separator
-		        						+ Constants.TMP_DIR + File.separator + fileName + ".txt";
+		        						+ Constants.TMP_DIR + File.separator + fileName;
 	    	}
 	    	File fileToDownload = new File(filePathToBeServed);
 	        InputStream inputStream = new FileInputStream(fileToDownload);
 	        response.setContentType("application/force-download");
-	        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".txt"); 
+	        response.setHeader("Content-Disposition", "attachment; filename=" + fileName); 
 	        IOUtils.copy(inputStream, response.getOutputStream());
 	        response.flushBuffer();
 	        inputStream.close();
