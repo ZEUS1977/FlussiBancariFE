@@ -5,6 +5,8 @@
 <html>
 <head>
 <title>Caricamento File Excel MAV</title>
+<link href="<c:url value='/static/css/bootstrap.css' />"  rel="stylesheet"></link>
+<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 </head>
 <body>
 	<!-- 	<form method="POST" action="MAVManagerExcelLoad?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
@@ -13,6 +15,7 @@
 	
 	</form>	
  -->	
+ <div id="mainWrapper">
 	<form action="${pageContext.request.contextPath}/MAVManagerExcelLoad" 
    			enctype="multipart/form-data"  method="POST" 
    			class="form-horizontal" role="form">
@@ -20,5 +23,6 @@
    			<input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
  			<input type="submit" value="Carica"> Premi qui per caricare il file Excel per la conversione in formato CBI!
 	</form>
+</div>
 </body>
 </html>
