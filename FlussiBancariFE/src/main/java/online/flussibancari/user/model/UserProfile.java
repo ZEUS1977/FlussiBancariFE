@@ -13,12 +13,17 @@ import javax.persistence.Table;
 @Table(name="USER_PROFILE")
 public class UserProfile implements Serializable{
 
+	private static final long serialVersionUID = -7954123936185159941L;
+
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;	
 
 	@Column(name="TYPE", length=15, unique=true, nullable=false)
 	private String type = UserProfileType.USER.getUserProfileType();
 	
+	public UserProfile() {
+		super();
+	}
 	public Integer getId() {
 		return id;
 	}

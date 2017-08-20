@@ -1,7 +1,9 @@
 package online.flussibancari.controller.user;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,12 +26,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import online.flussibancari.cbi.batch.CBIMAVBatch;
 import online.flussibancari.user.model.User;
 import online.flussibancari.user.model.UserProfile;
+import online.flussibancari.user.model.UserProfileType;
 import online.flussibancari.user.service.UserProfileService;
 import online.flussibancari.user.service.UserService;
 
@@ -87,8 +88,8 @@ public class UserController {
 	 * This method will be called on form submission, handling POST request for
 	 * saving user in database. It also validates the user input
 	 */
-	@RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
-	public String saveUser(@Valid User user, BindingResult result,
+	@RequestMapping(value = { "/autoRegistration" }, method = RequestMethod.POST)
+	public String autoRegistration(@Valid User user, BindingResult result,
 			ModelMap model) {
 
 		if (result.hasErrors()) {
@@ -174,6 +175,57 @@ public class UserController {
 	@ModelAttribute("roles")
 	public List<UserProfile> initializeProfiles() {
 		return userProfileService.findAll();
+	}
+	
+	/**
+	 * This method will provide the medium to add a new user.
+	 */
+	@RequestMapping(value = { "/autoRegistration" }, method = RequestMethod.GET)
+	public String autoRegistration(ModelMap model) {
+		User user = new User();
+		Set<UserProfile> profiles = new HashSet<UserProfile>();
+		UserProfile userProfile = new UserProfile();
+		userProfile.setType(UserProfileType.USER.getUserProfileType());
+		profiles.add(userProfile);
+		user.setUserProfiles(profiles);
+		model.addAttribute("user", user);
+		model.addAttribute("edit", false);
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "autoRegistration";
+	}
+	
+	/**
+	 * This method will be called on form submission, handling POST request for
+	 * saving user in database. It also validates the user input
+	 */
+	@RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
+	public String saveUser(@Valid User user, BindingResult result,
+			ModelMap model) {
+
+		if (result.hasErrors()) {
+			return "registration";
+		}
+
+		/*
+		 * Preferred way to achieve uniqueness of field [sso] should be implementing custom @Unique annotation 
+		 * and applying it on field [sso] of Model class [User].
+		 * 
+		 * Below mentioned peace of code [if block] is to demonstrate that you can fill custom errors outside the validation
+		 * framework as well while still using internationalized messages.
+		 * 
+		 */
+		if(!userService.isUserSSOUnique(user.getId(), user.getSsoId())){
+			FieldError ssoError =new FieldError("user","ssoId",messageSource.getMessage("non.unique.ssoId", new String[]{user.getSsoId()}, Locale.getDefault()));
+		    result.addError(ssoError);
+			return "registration";
+		}
+		
+		userService.saveUser(user);
+
+		model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
+		model.addAttribute("loggedinuser", getPrincipal());
+		//return "success";
+		return "registrationsuccess";
 	}
 	
 	/**

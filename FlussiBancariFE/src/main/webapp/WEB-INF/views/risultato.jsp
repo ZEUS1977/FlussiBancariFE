@@ -14,22 +14,21 @@
 </head>
 <body>
 <div id="mainWrapper">
-<h2>Risultato conversione Excel</h2>
-   <table>
-    <tr>
-        <td>Contenuto File Excel</td>
-        <td>${out.type}</td>
-    </tr>
-    <tr>
-        <td>Scarica qui il file CBI:</td>
-        <td>
-        	<s:url value="/downloadTxt/{file_name}" var="txt_file_url" htmlEscape="true">
-				<s:param name="file_name" value="${out.fileName}"></s:param>
-			</s:url>
-			<a href="${txt_file_url}">${out.type}</a>
-        </td>
-    </tr>
-</table> 
+<div class="well lead">Risultato conversione Excel</div>
+<form:form method="POST" modelAttribute="user" class="form-horizontal">
+      <div class="form-group col-md-12"> 
+        <label class="col-md-3 control-lable" for="firstName">Contenuto File Excel</label> 
+        <div class="col-md-7">${out.type}
+        </div>
+        <label class="col-md-3 control-lable" for="firstName">Scarica qui il file CBI:</label>
+        <div class="col-md-7">
+	        	<s:url value="/downloadTxt/{file_name}" var="txt_file_url" htmlEscape="true">
+					<s:param name="file_name" value="${out.fileName}"></s:param>
+				</s:url>
+				<a href="${txt_file_url}">${out.type}</a>
+		</div>
+	</div>
+</form:form>
 </div>
 </body>
 </html>
